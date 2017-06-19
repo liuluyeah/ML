@@ -14,6 +14,7 @@ FLAGS = None
 MAX_DOCUMENT_LENGTH = 20
 EMBEDDING_SIZE = 100
 n_words=0
+n_type=31
 
 def rnn_model(features,target):
   """RNN model to predict from sequence of words to a2 class."""
@@ -26,8 +27,8 @@ def rnn_model(features,target):
   # Create an unrolled Recurrent Neural Networks to length of
   # MAX_DOCUMENT_LENGTH and passes word_list as inputs for each unit.
   _, encoding = tf.contrib.rnn.static_rnn(lstm_cell, word_list,dtype=tf.float32)
-  target = tf.one_hot(target, 31, 1, 0)
-  logits = tf.contrib.layers.fully_connected(encoding, 31, activation_fn=None)
+  target = tf.one_hot(target, n_type, 1, 0)
+  logits = tf.contrib.layers.fully_connected(encoding, n_type, activation_fn=None)
   #loss = tf.contrib.losses.softmax_cross_entropy(logits, target)
   loss=tf.contrib.losses.mean_squared_error(logits, target)
   # Create a training op.
